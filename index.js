@@ -35,6 +35,60 @@ app.use("/", orderRoute);
 var customerRoute = require("./routes/customerRoute");
 app.use("/", customerRoute);
 
+//post:add orders from upload files
+const fileUpload = require("express-fileupload");
+app.use(fileUpload());
+/**
+ * function area
+ */
+var CSVtoJson = require("./functions/CSVtoJson");
+app.post("/upload", function (req, res) {
+  //console.log(req)
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send("No files were uploaded.");
+  }
+  const file = req.files.uploadFile;
+  const filename = file.name;
+  //store the upload files as hard copy
+  file.mv(`${__dirname}/store/${filename}`, (err) => {
+    if (err) {
+      console.log(err);
+      res.send("store error");
+    }
+  });
+  //transfer file data as Json
+  var dataJson = CSVtoJson(file.data.toString("utf8"));
+  let dataAvailable = [];
+  //connect the database, first check the customerID exists, then push into database
+  client.connect();
+  const database = client.db("TyroHealth");
+  const customerCollection = database.collection("Customers");
+  const orderCollection = database.collection("Orders");
+  console.log("Connected correctly to server");
+  try {
+    dataJson.forEach((item) => {
+      const myDoc = customerCollection.find({ customerId: item.customerId });
+      if (myDoc) {
+        if (dataAvailable.length > 10) {
+          orderCollection.insertMany(dataAvailable);
+          dataAvailable = [];
+        }
+        dataAvailable.push(item);
+      }
+    });
+  } finally {
+    console.log("insert into database");
+
+    orderCollection.insertMany(dataAvailable);
+    client.close();
+  }
+
+  res.send(
+    "<p>upload successfully, click <a href='/orders'>here</a> to check order list</p>"
+  );
+});
+
+module.exports = app;
 
 
 
