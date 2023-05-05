@@ -1,0 +1,47 @@
+<h1>Customer list</h1>
+
+<% if (customersList.length > 0){%>
+
+<ul>
+  <% customersList.forEach(function(customer){ %>
+  <li class="timeline-yellow">
+    <div class="timeline-time">
+      <span
+        style="
+          font-weight: 500;
+          font-size: 15px;
+          line-height: 20px;
+          text-align: left;
+        "
+      >
+        Customer ID: <%= customer.customerId %>
+      </span>
+      <p
+        style="
+          font-weight: 500;
+          font-size: 15px;
+          line-height: 20px;
+          text-align: left;
+        "
+      >
+        First Name: <%= customer.firstName %>
+      </p>
+      <p
+        style="
+          font-weight: 500;
+          font-size: 15px;
+          line-height: 20px;
+          text-align: left;
+        "
+      >
+        Last Name: <%= customer.lastName %>
+      </p>
+    </div>
+  </li>
+
+  <% }) %>
+</ul>
+<%} else {%>
+
+<p>There is no customers in the database</p>
+<%}%>

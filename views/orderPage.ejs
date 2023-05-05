@@ -1,0 +1,57 @@
+<h1>Order list</h1>
+
+<% if (ordersList.length > 0){%>
+
+<ul>
+  <% ordersList.forEach(function(order){ %>
+  <li class="timeline-yellow">
+    <div class="timeline-time">
+      <span
+        style="
+          font-weight: 500;
+          font-size: 15px;
+          line-height: 20px;
+          text-align: left;
+        "
+      >
+        Order ID: <%= order.orderId %>
+      </span>
+      <p
+        style="
+          font-weight: 500;
+          font-size: 15px;
+          line-height: 20px;
+          text-align: left;
+        "
+      >
+        Customer ID: <%= order.customerId %>
+      </p>
+      <p
+        style="
+          font-weight: 500;
+          font-size: 15px;
+          line-height: 20px;
+          text-align: left;
+        "
+      >
+        Item: <%= order.item %>
+      </p>
+      <p
+        style="
+          font-weight: 500;
+          font-size: 15px;
+          line-height: 20px;
+          text-align: left;
+        "
+      >
+        Quantity: <%= order.quantity %>
+      </p>
+    </div>
+  </li>
+
+  <% }) %>
+</ul>
+<%} else {%>
+
+<p>There is no orders in the database</p>
+<%}%>
