@@ -1,13 +1,15 @@
-const { MongoClient } = require("mongodb");
-require("dotenv").config();
-let uri = process.env.uri;
+const { getClient } = require("./client");
+const { DB_NAME } = require("./const");
 
-const client = new MongoClient(uri);
 async function fetchData(collectionName) {
+  const client = getClient();
   await client.connect();
-  const database = client.db("TyroHealth");
-  const ratings = database.collection(collectionName);
-  const cursor = await ratings.find({}).limit(10).toArray();
+
+  const database = client.db(DB_NAME);
+  const data = database.collection(collectionName);
+
+  const cursor = await data.find({}).toArray();
   return cursor;
 }
-module.exports = fetchData;
+
+module.exports = { fetchData };

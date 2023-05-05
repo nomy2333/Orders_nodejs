@@ -1,29 +1,19 @@
-const { MongoClient } = require("mongodb");
-require("dotenv").config();
-let uri = process.env.uri;
+const { getClient } = require("./client");
+const { DB_NAME } = require("./const");
 
-const client = new MongoClient(uri);
-async function insertData(dataJson) {
+async function insertData(dataArray) {
+  const client = getClient();
   await client.connect();
-  const database = client.db("TyroHealth");
-  const customerCollection = database.collection("Customers");
-  const orderCollection = database.collection("Orders");
-  let dataAvailable = [];
-  //   try {
-  dataJson.forEach((item) => {
-    const myDoc = customerCollection.find({ customerId: item.customerId });
-    if (myDoc) {
-      if (dataAvailable.length > 10) {
-        orderCollection.insertMany(dataAvailable);
-        dataAvailable = [];
-      }
-      dataAvailable.push(item);
-    }
-  });
-  //   } finally {
-  console.log("insert into database");
-  await orderCollection.insertMany(dataAvailable);
-  client.close();
-  //   }
+
+  try {
+    const database = client.db(DB_NAME);
+    const orderCollection = database.collection("Orders");
+
+    console.log("insert into database");
+    await orderCollection.insertMany(dataArray);
+  } finally {
+    client.close();
+  }
 }
-module.exports = insertData;
+
+module.exports = { insertData };

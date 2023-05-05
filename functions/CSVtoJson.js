@@ -20,4 +20,6 @@ function CSVtoJson(buffdata) {
   return dataJson;
 }
 
-module.exports = CSVtoJson;
+module.exports = {
+  CSVtoJson,
+};

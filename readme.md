@@ -7,7 +7,8 @@ Write a simple batch job that retrieves a CSV file from a URL, which imports ord
  cmd: npm run dev
 
 3. how to run test:
-cmd: npm run test
+cmd: npm test
+
 
 4. framework desgin:
 4.1 Main page: 

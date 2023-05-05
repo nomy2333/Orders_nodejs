@@ -1,13 +1,13 @@
-var express = require("express");
-var router = express.Router();
-var orders = require("../database/fetchData");
+const express = require("express");
+const router = express.Router();
+const { fetchData } = require("../database/fetchData");
 
 /**
  * GET order page.
  */
 
 router.get("/orders", async (req, res) => {
-  res.render("orderPage", { ordersList: await orders("Orders") });
+  res.render("orderPage", { ordersList: await fetchData("Orders") });
 });
 
 module.exports = router;

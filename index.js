@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
 const port = 3001;
@@ -29,7 +31,8 @@ app.use("/", customerRoute);
 //post:add orders from upload files
 const fileUpload = require("express-fileupload");
 app.use(fileUpload());
-const uploadRoute=require("./routes/uploadRoute");
-app.use("/",uploadRoute)
+
+const { uploadRoute } = require("./routes/uploadRoute");
+app.use("/", uploadRoute);
 
 module.exports = app;
