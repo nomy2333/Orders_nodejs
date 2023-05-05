@@ -41,7 +41,7 @@ cmd: npm run test
     6.6 connect MongoDB atalas.(finished)
     6.7 input the data into database.(finished)(notes: if the order is duplicate, should add altogerther? or set new id and push into database as single one? )
     6.8 test cases(finished)
-    6.9 write the readme.md
+    6.9 write the readme.md（finished）
     6.10 docker compose
 
 7. related installation:
