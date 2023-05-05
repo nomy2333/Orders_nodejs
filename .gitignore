@@ -9,3 +9,7 @@ node_modules
 
 # Ignore Mac system files
 .DS_store
+
+# Ignore test-related files
+/coverage.data
+/coverage/
